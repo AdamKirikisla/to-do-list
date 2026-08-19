@@ -5,6 +5,5 @@ CREATE TABLE IF NOT EXISTS tasks (
     title VARCHAR(255) NOT NULL,
     category ENUM('work', 'personal', 'errands') NOT NULL DEFAULT 'work',
     priority ENUM('low', 'medium', 'high') NOT NULL DEFAULT 'medium',
-    due_date DATE,
     is_done BOOLEAN NOT NULL DEFAULT FALSE
 );

@@ -28,3 +28,43 @@ const getTaskById = async (req, res) => {
   }
 };
 
+// POST /api/tasks
+const createTask = async (req, res) => {
+  const { title, category, priority, due_date } = req.body;
+
+  try {
+     if (!title || title.trim() === '') {
+    return res.status(400).json({ error: 'Title is required' });}
+    
+    const [result] = await pool.execute(
+      'INSERT INTO tasks (title, category, priority, due_date) VALUES (?, ?, ?)',
+      [title, category, priority]
+    );
+    res.status(201).json({ id: result.insertId, title, category, priority, is_done: false });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Failed to create task' });
+  }
+};
+
+async function createEvent(req, res) {
+  try {
+    const { title, description, category_id, event_date, start_time, end_time, location, capacity } = req.body;
+    const organizer_id = req.session.userId;
+
+    if (!title || title.trim() === '') {
+      return res.status(400).json({ error: 'Event title cannot be empty.' });
+    }
+
+    const [result] = await pool.execute(
+      `INSERT INTO Events (title, description, category_id, event_date, start_time, end_time, location, capacity, organizer_id)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+      [title, description, category_id, event_date, start_time, end_time, location, cap, organizer_id]
+    );
+
+    res.status(201).json({ message: 'Event created.', event_id: result.insertId });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Could not create event.' });
+  }
+}
