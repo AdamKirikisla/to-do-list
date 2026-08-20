@@ -3,7 +3,7 @@ const pool = require('../db');
 // GET /api/tasks
 const getAllTasks = async (req, res) => {
   try {
-    const [rows] = await pool.execute('SELECT * FROM tasks ORDER BY created_at DESC');
+    const [rows] = await pool.execute('SELECT * FROM tasks');
     res.json(rows);
   } catch (err) {
     console.error(err);
@@ -94,4 +94,4 @@ const deleteTask = async (req, res) => {
   }
 };
 
-module.exports = { getAllTasks, createTask, updateTask, deleteTask };
+module.exports = { getAllTasks, getTaskById, createTask, updateTask, deleteTask };
