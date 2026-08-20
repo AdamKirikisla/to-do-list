@@ -19,3 +19,12 @@ export async function createTask(data) {
   }
   return await response.json();
 }
+
+// Delete Task
+export async function deleteTask(id) {
+  const response = await fetch(`/api/tasks/${id}`, { method: 'DELETE' });
+  if (!response.ok) {
+    throw new Error(`Request failed with status ${response.status}`);
+  }
+  return await response.json();
+}

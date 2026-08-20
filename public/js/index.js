@@ -1,9 +1,12 @@
-import { getTasks, createTask } from './api.js';
+import { getTasks, createTask, deleteTask } from './api.js';
 import { renderTasks, taskCounter } from './render.js';
 
 const form = document.querySelector('#add-task-form');
 let tasks = [];
+const taskList = document.querySelector('#task-list');
 
+
+// Load tasks
 async function loadTasks() {
   try {
     tasks = await getTasks();
@@ -14,6 +17,7 @@ async function loadTasks() {
   }
 }
 
+// Create Task
 form.addEventListener('submit', async (e) => {
   e.preventDefault();
 
@@ -33,4 +37,34 @@ form.addEventListener('submit', async (e) => {
     console.log('Something went wrong:', error);
   }
 });
+
+
+// Delete Task
+taskList.addEventListener('click', async (e) => {
+  
+  // front-end
+  if (!e.target.matches('.delete-btn')) return;
+  const button = e.target
+  const li  = button.closest(".task")
+  const id = li.dataset.id;
+  li.remove()
+
+  // back-end
+   try {
+    await deleteTask(id);
+    tasks = tasks.filter(task => task.id !== Number(id));
+    renderTasks(tasks);
+    taskCounter(tasks);
+  } catch (error) {
+    console.log('Something went wrong:', error);
+  }
+
+});
+
+
+
+
+
+
+
 loadTasks();
