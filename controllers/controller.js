@@ -79,3 +79,17 @@ const updateTask = async (req, res) => {
   }
 };
 
+// DELETE /api/tasks/:id
+const deleteTask = async (req, res) => {
+  try {
+    const id = Number(req.params.id);
+    if (!Number.isInteger(id)) return res.status(400).json({ error: 'Invalid task id.' });
+
+    const [result] = await pool.execute('DELETE FROM tasks WHERE id = ?', [id]);
+    if (result.affectedRows === 0) return res.status(404).json({ error: 'Task not found' });
+    res.json({ message: 'Task deleted' });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Failed to delete task' });
+  }
+};
