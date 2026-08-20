@@ -6,5 +6,5 @@ CREATE TABLE tasks (
     title VARCHAR(255) NOT NULL,
     category ENUM('work', 'personal', 'errands') NOT NULL DEFAULT 'work',
     priority ENUM('low', 'medium', 'high') NOT NULL DEFAULT 'medium',
-    is_done BOOLEAN NOT NULL DEFAULT FALSE
+    is_done BOOLEAN DEFAULT FALSE
 );
