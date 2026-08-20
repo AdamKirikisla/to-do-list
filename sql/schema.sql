@@ -1,6 +1,7 @@
 CREATE DATABASE IF NOT EXISTS todo_app;
 USE todo_app;
-CREATE TABLE IF NOT EXISTS tasks (
+DROP TABLE IF EXISTS tasks;
+CREATE TABLE tasks (
     id INT AUTO_INCREMENT PRIMARY KEY,
     title VARCHAR(255) NOT NULL,
     category ENUM('work', 'personal', 'errands') NOT NULL DEFAULT 'work',
