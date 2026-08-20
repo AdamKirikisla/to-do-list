@@ -93,3 +93,5 @@ const deleteTask = async (req, res) => {
     res.status(500).json({ error: 'Failed to delete task' });
   }
 };
+
+module.exports = { getAllTasks, createTask, updateTask, deleteTask };
