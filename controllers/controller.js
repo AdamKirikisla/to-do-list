@@ -59,3 +59,23 @@ const createTask = async (req, res) => {
   }
 };
 
+
+// PUT /api/tasks/:id
+const updateTask = async (req, res) => {
+  const { title, category, priority, is_done } = req.body;
+  try {
+    const id = Number(req.params.id);
+    if (!Number.isInteger(id)) return res.status(400).json({ error: 'Invalid task id.' });
+
+    const [result] = await pool.execute(
+      `UPDATE tasks SET title = ?, category = ?, priority = ?, is_done = ? WHERE id = ?`,
+      [title, category, priority, is_done, id]
+    );
+    if (result.affectedRows === 0) return res.status(404).json({ error: 'Task not found' });
+    res.json({ message: 'Task updated' });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Failed to update task' });
+  }
+};
+
