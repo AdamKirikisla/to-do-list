@@ -67,10 +67,37 @@ const updateTask = async (req, res) => {
     const id = Number(req.params.id);
     if (!Number.isInteger(id)) return res.status(400).json({ error: 'Invalid task id.' });
 
+    const fields = [];
+    const values = [];
+
+    if (title !== undefined) {
+      fields.push('title = ?');
+      values.push(title);
+    }
+    if (category !== undefined) {
+      fields.push('category = ?');
+      values.push(category);
+    }
+    if (priority !== undefined) {
+      fields.push('priority = ?');
+      values.push(priority);
+    }
+    if (is_done !== undefined) {
+      fields.push('is_done = ?');
+      values.push(is_done);
+    }
+
+    if (fields.length === 0) {
+      return res.status(400).json({ error: 'No fields provided to update' });
+    }
+
+    values.push(id);
+
     const [result] = await pool.execute(
-      `UPDATE tasks SET title = ?, category = ?, priority = ?, is_done = ? WHERE id = ?`,
-      [title, category, priority, is_done, id]
+      `UPDATE tasks SET ${fields.join(', ')} WHERE id = ?`,
+      values
     );
+
     if (result.affectedRows === 0) return res.status(404).json({ error: 'Task not found' });
     res.json({ message: 'Task updated' });
   } catch (err) {
