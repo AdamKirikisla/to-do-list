@@ -1,4 +1,4 @@
-import { getTasks, createTask, deleteTask } from './api.js';
+import { getTasks, createTask, deleteTask, updateTask } from './api.js';
 import { renderTasks, taskCounter } from './render.js';
 
 const form = document.querySelector('#add-task-form');
@@ -62,6 +62,7 @@ taskList.addEventListener('click', async (e) => {
 });
 
 
+// Update Task
 
 
 

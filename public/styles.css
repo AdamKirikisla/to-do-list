@@ -145,3 +145,103 @@ main {
   font-size: 1rem;
   opacity: 0.7;
 }
+
+/* Update */
+.update-card {
+  position: fixed;
+  top: 24px;
+  right: 24px;
+  width: 320px;
+  min-height: 480px;
+  border-radius: 0.75rem;
+  background-color: oklch(0.24 0.01 240);
+  padding: 1.5rem;
+  color: rgba(243, 244, 246, 1);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
+  border: 1px solid oklch(0.38 0.02 160);
+  display: flex;
+  flex-direction: column;
+}
+
+.update-task {
+  text-align: left;
+  font-size: 1.1rem;
+  line-height: 1.5rem;
+  font-weight: 700;
+  margin: 0 0 1.25rem;
+  color: #2ecc87;
+}
+
+.update-form {
+  margin-top: 0;
+}
+
+.update-input-group {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+
+.update-input-group label {
+  display: block;
+  color: #888;
+  margin-bottom: 6px;
+}
+
+.update-input-group input {
+  width: 100%;
+  border-radius: 20px;
+  border: none;
+  outline: 0;
+  background-color: #0d0f10;
+  padding: 10px 16px;
+  color: #e5e5e5;
+  font-size: 0.95rem;
+  box-sizing: border-box;
+}
+
+.update-input-group input:focus {
+  outline: 1px solid #2ecc87;
+}
+
+.update-input-group select {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.update-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 1.5rem;
+}
+
+.update-actions button {
+  flex: 1;
+  border: none;
+  border-radius: 20px;
+  padding: 10px 14px;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.cancel-btn {
+  background: transparent;
+  border: 1px solid oklch(0.32 0.008 240);
+  color: #e5e5e5;
+}
+
+.cancel-btn:hover {
+  background: #24272a;
+}
+
+.save-btn {
+  background: #2ecc87;
+  color: #0d0f10;
+}
+
+.save-btn:hover {
+  background: #27b878;
+}
+
