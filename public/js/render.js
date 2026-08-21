@@ -11,7 +11,7 @@ export function renderTasks(tasks) {
       <li class="task" data-id="${task.id}">
         <input type="checkbox" class="task-check" ${task.is_done ? 'checked' : ''}>
         <div class="task-info">
-          <p class="task-title">${task.title}</p>
+          <p class="task-title">${escapeHTML(task.title)}</p>
           <p class="task-meta">${task.category} · ${task.priority}</p>
         </div>
         <div class="task-actions">
@@ -28,4 +28,12 @@ export function renderTasks(tasks) {
 export function taskCounter(tasks) {
   let counter = document.querySelector('#task-counter');
   counter.textContent = `${tasks.length} task${tasks.length === 1 ? '' : 's'}:`;
+}
+
+
+// sanitization
+function escapeHTML(str) {
+  const div = document.createElement('div');
+  div.textContent = str;
+  return div.innerHTML;
 }
