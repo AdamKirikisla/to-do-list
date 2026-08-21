@@ -125,7 +125,26 @@ updateForm.addEventListener('submit', async (e) => {
   }
 });
 
+// Toggle Task Done
+taskList.addEventListener('change', async (e) => {
+  if (!e.target.matches('.task-check')) return;
 
+  const li = e.target.closest('.task');
+  const id = li.dataset.id;
+  const is_done = e.target.checked;
+
+  try {
+    await updateTask(id, { is_done });
+    tasks = tasks.map(task =>
+      task.id === Number(id) ? { ...task, is_done } : task
+    );
+    renderTasks(tasks);
+    taskCounter(tasks);
+  } catch (error) {
+    console.log('Something went wrong:', error);
+  }
+});
+// Filters
 
 
 loadTasks();
