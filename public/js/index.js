@@ -63,7 +63,67 @@ taskList.addEventListener('click', async (e) => {
 
 
 // Update Task
+const updateCard = document.querySelector('.update-card');
+const updateForm = document.querySelector('.update-form');
+const editTitleInput = document.querySelector('#edit-title');
+const editPrioritySelect = document.querySelector('#edit-priority');
+const editCategorySelect = document.querySelector('#edit-category');
+const cancelBtn = document.querySelector('.cancel-btn');
 
+let editingId = null;
+
+// Hide the card by default
+updateCard.style.display = 'none';
+
+// Open edit card when ✏️ is clicked
+taskList.addEventListener('click', (e) => {
+  if (!e.target.matches('.edit-btn')) return;
+
+  const li = e.target.closest('.task');
+  const id = Number(li.dataset.id);
+  const task = tasks.find(t => t.id === id);
+  if (!task) return;
+
+  editingId = id;
+  editTitleInput.value = task.title;
+  editPrioritySelect.value = task.priority;
+  editCategorySelect.value = task.category;
+
+  updateCard.style.display = 'flex';
+});
+
+// Cancel closes the card, discards changes
+cancelBtn.addEventListener('click', () => {
+  editingId = null;
+  updateCard.style.display = 'none';
+  updateForm.reset();
+});
+
+// Save changes
+updateForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  if (editingId === null) return;
+
+  const data = {
+    title: editTitleInput.value.trim(),
+    priority: editPrioritySelect.value,
+    category: editCategorySelect.value
+  };
+
+  try {
+    await updateTask(editingId, data);
+    tasks = tasks.map(task =>
+      task.id === editingId ? { ...task, ...data } : task
+    );
+    renderTasks(tasks);
+    taskCounter(tasks);
+    editingId = null;
+    updateCard.style.display = 'none';
+    updateForm.reset();
+  } catch (error) {
+    console.log('Something went wrong:', error);
+  }
+});
 
 
 
