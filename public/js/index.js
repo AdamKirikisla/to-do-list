@@ -145,6 +145,31 @@ taskList.addEventListener('change', async (e) => {
   }
 });
 // Filters
+// Filters
+const filtersSection = document.querySelector('#filters-form');
+const prioritySelect = document.querySelector('#filters-form select[name="priority"]');
+const statusSelect = document.querySelector('#filters-form select[name="status"]');
+const categorySelect = document.querySelector('#filters-form select[name="category"]');
 
+function getVisibleTasks() {
+  const priority = prioritySelect.value;
+  const status = statusSelect.value;
+  const category = categorySelect.value;
+
+  return tasks.filter(task => {
+    const matchesPriority = priority === 'all' || task.priority === priority;
+    const matchesCategory = category === 'all' || task.category === category;
+    const matchesStatus =
+      status === 'all' ||
+      (status === 'done' && task.is_done) ||
+      (status === 'open' && !task.is_done);
+
+    return matchesPriority && matchesCategory && matchesStatus;
+  });
+}
+
+filtersSection.addEventListener('change', () => {
+  renderTasks(getVisibleTasks());
+});
 
 loadTasks();
