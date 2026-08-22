@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo App</title>
+    <link rel="stylesheet" href="styles.css">
+
+</head>
+<body>
+
+    <header>
+        <h1>TODO APP</h1>
+        <div class="stats">
+            <p id="task-counter"></p></div>
+    </header>
+    
+    <main>
+        <!-- Forms -->
+         <section aria-label="Add task">
+            <form action="" id="add-task-form">
+                <input type="text" name="task" placeholder="Add a task!" required>
+                
+                 
+                    
+                    <select name="priority-forms" required class="forms-filter">
+                        <option value="" disabled selected>Priority</option>
+                        <option value="high">High</option>
+                        <option value="medium">Medium</option>
+                        <option value="low">Low</option>
+                    </select>
+                
+ 
+                
+                    
+                    <select name="category-forms" required class="forms-filter">
+                        <option value="" disabled selected>Category</option>
+                        <option value="work">Work</option>
+                        <option value="personal">Personal</option>
+                        <option value="errands">Errands</option>
+                    </select>
+                
+
+                <button type="submit">ADD</button>
+            </form>
+         </section>
+
+            <!-- Filters -->
+        <section aria-label="Filters" id="filters-form">
+            <div class="visually-hidden">
+                <label>
+            <select name="priority">
+                <option value="all">All priorities</option>
+                <option value="high">High</option>
+                <option value="medium">Medium</option>
+                <option value="low">Low</option>
+            </select>
+                </label>
+            </div>
+            
+
+            <div class="visually-hidden">
+                <label>
+            <select name="status">
+                <option value="all">All tasks</option>
+                <option value="open">Open</option>
+                <option value="done">Done</option>
+            </select>
+                </label>
+            </div>
+            
+
+            <div class="visually-hidden">
+                <label>
+            <select name="category">
+                <option value="all">All categories</option>
+                <option value="work">Work</option>
+                <option value="personal">Personal</option>
+                <option value="errands">Errands</option>
+            </select>
+                </label>
+            </div>
+        </section>
+
+
+          <!-- Task list -->
+        <section aria-label="Tasks">
+        <ul id="task-list">
+            
+        </ul>
+        </section>
+
+       
+        <!-- Edit Task -->
+<section class="update-card">
+    <p class="update-task">Edit Task</p>
+    <form class="update-form">
+        <div class="update-input-group">
+            <label for="edit-title">Title</label>
+            <input type="text" name="title" id="edit-title" placeholder="">
+        </div>
+
+        <div class="update-input-group">
+            <label for="edit-priority">Priority</label>
+            <select name="priority" id="edit-priority" class="forms-filter">
+                <option value="high">High</option>
+                <option value="medium">Medium</option>
+                <option value="low">Low</option>
+            </select>
+        </div>
+
+        <div class="update-input-group">
+            <label for="edit-category">Category</label>
+            <select name="category" id="edit-category" class="forms-filter">
+                <option value="work">Work</option>
+                <option value="personal">Personal</option>
+                <option value="errands">Errands</option>
+            </select>
+        </div>
+
+        <div class="update-actions">
+            <button type="button" class="cancel-btn">Cancel</button>
+            <button type="submit" class="save-btn">Save Changes</button>
+        </div>
+    </form>
+</section>
+	
+	
+
+    </main>
+    <script type="module" src="js/index.js"></script>
+
+</body>
+</html>
