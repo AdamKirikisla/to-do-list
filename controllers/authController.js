@@ -25,6 +25,12 @@ let { email, username, password } = req.body
     return res.status(400).json({ error: 'Invalid email format' })
 
 }
+
+ if (!/^(?=.*[A-Za-z])(?=.*\d).{8,}$/.test(password)) {
+
+    return res.status(400).json({ error: 'Password must be at least 8 characters and include at least one letter and one number.' })
+
+  }
   console.log(req.body)
 
   return res.status(201).json({ message: 'User registered successfully.' })

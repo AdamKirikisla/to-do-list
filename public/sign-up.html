@@ -31,7 +31,9 @@
     </label>
 
     <label>
-        <input class="signup-input" type="password" placeholder=""  name="password" required>
+        <input class="signup-input" type="password" placeholder=""  name="password" required
+        pattern="^(?=.*[A-Za-z])(?=.*\d).{8,}$"
+        title="Password must be at least 8 characters and include at least one letter and one number.">
         <span>Password</span>
     </label>
 
