@@ -12,9 +12,15 @@ app.use(express.urlencoded({ extended : false }));
 // Display page
 app.use(express.static('public'))
 
-// Routes
+// Task Routes
 const taskRoutes = require('./routes/taskRoutes');
 app.use('/api/tasks', taskRoutes);
+
+// Auth Routes
+const authRoutes = require('./routes/authRoutes');
+app.use('/api/auth', authRoutes);
+
+
 
 // npm run dev
 app.listen(process.env.PORT, () => console.log('app is running'));
