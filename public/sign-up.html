@@ -14,7 +14,9 @@
 
     <div class="signup-flex">
         <label>
-            <input class="signup-input" type="text" placeholder="" name="username" required>
+            <input class="signup-input" type="text" placeholder="" name="username" required
+            pattern="^[a-zA-Z0-9_\-]{1,20}$"
+            title="Username must be 1–20 characters and can only include letters, numbers, underscores (_), or hyphens (-).">
             <span>Username</span>
         </label>
 
@@ -22,7 +24,9 @@
     </div>
 
     <label>
-        <input class="signup-input" type="email" placeholder="" name="email" required>
+        <input class="signup-input" type="email" placeholder="" name="email" required
+        pattern="^[^\s@]+@[^\s@]+\.[^\s@]+$"
+        title="Enter a valid email address, like name@example.com">
         <span>Email</span>
     </label>
 
