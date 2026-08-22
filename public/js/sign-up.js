@@ -20,7 +20,7 @@ signupForm.addEventListener('submit', async (e) => {
     const data = await res.json()
 
     if (res.ok) {
-      window.location.href = '/log-in.html'
+      window.location.href = "log-in.html";
     } else {
       console.error(data.error || 'Signup failed')
     }
