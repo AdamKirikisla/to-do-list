@@ -633,3 +633,9 @@ main {
     text-decoration: underline;
 }
 
+.signup-error {
+  color: #e24b4a;
+  font-size: 0.85rem;
+  margin: 0 0 12px;
+  min-height: 1em;
+}

@@ -1,4 +1,5 @@
 const signupForm = document.querySelector(".signup-form")
+const errorEl = document.querySelector(".signup-error");
 
 signupForm.addEventListener('submit', async (e) => {
   e.preventDefault()
@@ -22,7 +23,7 @@ signupForm.addEventListener('submit', async (e) => {
     if (res.ok) {
       window.location.href = "log-in.html";
     } else {
-      console.error(data.error || 'Signup failed')
+      errorEl.textContent = data.error || 'Signup failed'
     }
   } catch (err) {
     console.error('Network error:', err)
