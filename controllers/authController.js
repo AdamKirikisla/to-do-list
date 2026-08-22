@@ -1,5 +1,6 @@
 const pool = require('../db');
 const validator = require('validator');
+const bcrypt = require('bcryptjs')
 
 const registerUser = async(req, res) => {
 
@@ -32,8 +33,7 @@ let { email, username, password } = req.body
     return res.status(400).json({ error: 'Password must be at least 8 characters and include at least one letter and one number.' })
 
   }
-  // Print account
-  console.log(req.body)
+ 
 
 
     // Add user to db
@@ -46,7 +46,10 @@ let { email, username, password } = req.body
      
     }
 
-    const result = await pool.execute('INSERT INTO Users (username, email, password_hash) VALUES (?, ?, ?)', [username, email, password])
+    // Hashing Logic
+    const hashed = await bcrypt.hash(password, 10)
+
+    const result = await pool.execute('INSERT INTO Users (username, email, password_hash) VALUES (?, ?, ?)', [username, email, hashed])
 
     res.status(201).json({ message: 'User registered'})}
 
