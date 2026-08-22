@@ -1,3 +1,4 @@
+const pool = require('../db');
 const validator = require('validator');
 
 const registerUser = async(req, res) => {
@@ -31,11 +32,31 @@ let { email, username, password } = req.body
     return res.status(400).json({ error: 'Password must be at least 8 characters and include at least one letter and one number.' })
 
   }
+  // Print account
   console.log(req.body)
 
-  return res.status(201).json({ message: 'User registered successfully.' })
 
+    // Add user to db
+  try {
+
+    const [rows] = await pool.execute('SELECT user_id FROM Users WHERE email = ? OR username = ?', [email, username])
+
+    if (rows.length > 0) {
+      return res.status(400).json({ error: 'Email or username already in use.' })
+     
+    }
+
+    const result = await pool.execute('INSERT INTO Users (username, email, password_hash) VALUES (?, ?, ?)', [username, email, password])
+
+    res.status(201).json({ message: 'User registered'})}
+
+    catch (err) {
+
+    console.error('Registration error:', err.message);
+    res.status(500).json({ error: 'Registration failed. Please try again.' })
+
+  }
+  
 }
-
 
 module.exports = {registerUser};
