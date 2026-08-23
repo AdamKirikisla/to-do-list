@@ -68,4 +68,44 @@ let { email, username, password } = req.body
   
 }
 
-module.exports = {registerUser};
+
+
+const loginUser = async (req, res) => {
+
+  let { email, password } = req.body
+
+  if (!email || !password) {
+    return res.status(400).json({ error: 'All fields are required' })
+  }
+
+  email = email.trim()
+
+  try {
+
+    const [rows] = await pool.execute('SELECT * FROM Users WHERE email = ?', [email])
+    const user = rows[0];
+
+    if (!user) {
+      return res.status(401).json({ error: 'Invalid credentials' })
+    }
+
+    const isValid = await bcrypt.compare(password, user.password_hash)
+
+    if (!isValid) {
+      return res.status(401).json({ error: 'Invalid credentials' })
+    }
+
+    req.session.userId = user.user_id
+    res.json({ message: 'Logged in' })
+
+  } catch (err) {
+    console.error('Login error:', err.message)
+    res.status(500).json({ error: 'Login failed. Please try again.' })
+  }
+}
+
+
+
+
+
+module.exports = {registerUser, loginUser};
