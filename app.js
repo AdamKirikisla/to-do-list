@@ -9,7 +9,7 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended : false }));
 
-// Session
+// Session, runs on every single request
 app.use(session({
   secret: process.env.SESSION_SECRET, // signs the session cookie so it can't be tampered with
   resave: false, // don't rewrite the session to the store if nothing changed
