@@ -75,11 +75,11 @@ const updateTask = async (req, res) => {
     const values = [];
 
     if (title !== undefined) {
-  if (title.trim() === '') {
-    return res.status(400).json({ error: 'Title cannot be empty' });
-  }
-  fields.push('title = ?');
-  values.push(title.trim());
+      if (title.trim() === '') {
+        return res.status(400).json({ error: 'Title cannot be empty' });
+      }
+      fields.push('title = ?');
+      values.push(title.trim());
 }
     if (category !== undefined) {
       fields.push('category = ?');
