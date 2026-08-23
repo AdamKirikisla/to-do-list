@@ -30,7 +30,13 @@ main {
   width: 100%;
   max-width: 900px;
 }
-
+#welcome-message {
+  color: #2ecc87;
+  font-size: 1.2rem;
+  font-weight: 600;
+  text-align: center;
+  margin: 0 0 25px;
+}
 /* Add task form */
 #add-task-form {
   display: flex;
