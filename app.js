@@ -3,6 +3,8 @@ const app = express();
 const cors = require('cors');
 const dotenv = require('dotenv');
 const session = require('express-session')
+const MySQLStore = require('express-mysql-session')(session); 
+const pool = require('./db');
 dotenv.config();
 
 app.use(cors());
@@ -10,7 +12,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended : false }));
 
 // Session, runs on every single request
+const sessionStore = new MySQLStore({}, pool);
+
 app.use(session({
+  store: sessionStore,
   secret: process.env.SESSION_SECRET, // signs the session cookie so it can't be tampered with
   resave: false, // don't rewrite the session to the store if nothing changed
   saveUninitialized: false, // don't create/store a session until something is actually saved to it
