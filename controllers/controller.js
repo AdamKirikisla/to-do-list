@@ -3,7 +3,8 @@ const pool = require('../db');
 // GET /api/tasks
 const getAllTasks = async (req, res) => {
   try {
-    const [rows] = await pool.execute('SELECT * FROM tasks');
+    const userId = req.session.userId;
+    const [rows] = await pool.execute('SELECT * FROM tasks WHERE user_id = ?', [userId]);
     res.json(rows);
   } catch (err) {
     console.error(err);
@@ -15,10 +16,11 @@ const getAllTasks = async (req, res) => {
 // GET /api/tasks/:id
 const getTaskById = async (req, res) => {
   try {
+    const userId = req.session.userId;
     const id = Number(req.params.id);
     if (!Number.isInteger(id)) return res.status(400).json({ error: 'Invalid task id.' });
 
-    const [rows] = await pool.execute('SELECT * FROM tasks WHERE id = ?', [id]);
+    const [rows] = await pool.execute('SELECT * FROM tasks WHERE id = ? AND user_id = ?', [id, userId]);
     if (rows.length === 0) {
       return res.status(404).json({ error: 'Task not found' });
     }
@@ -31,6 +33,7 @@ const getTaskById = async (req, res) => {
 
 // POST /api/tasks
 const createTask = async (req, res) => {
+  const userId = req.session.userId;
   const { title, category, priority } = req.body;
 
   if (!title || title.trim() === '') {
@@ -42,8 +45,8 @@ const createTask = async (req, res) => {
 
   try {
     const [result] = await pool.execute(
-      'INSERT INTO tasks (title, category, priority) VALUES (?, ?, ?)',
-      [title, safeCategory, safePriority]
+      'INSERT INTO tasks (user_id, title, category, priority) VALUES (?, ?, ?, ?)',
+      [userId, title, safeCategory, safePriority]
     );
     res.status(201).json({
       message: 'Task Created',
@@ -62,6 +65,7 @@ const createTask = async (req, res) => {
 
 // PUT /api/tasks/:id
 const updateTask = async (req, res) => {
+  const userId = req.session.userId;
   const { title, category, priority, is_done } = req.body;
   try {
     const id = Number(req.params.id);
@@ -91,10 +95,10 @@ const updateTask = async (req, res) => {
       return res.status(400).json({ error: 'No fields provided to update' });
     }
 
-    values.push(id);
+    values.push(id, userId);
 
     const [result] = await pool.execute(
-      `UPDATE tasks SET ${fields.join(', ')} WHERE id = ?`,
+      `UPDATE tasks SET ${fields.join(', ')} WHERE id = ? AND user_id = ?`,
       values
     );
 
@@ -109,10 +113,11 @@ const updateTask = async (req, res) => {
 // DELETE /api/tasks/:id
 const deleteTask = async (req, res) => {
   try {
+    const userId = req.session.userId;
     const id = Number(req.params.id);
     if (!Number.isInteger(id)) return res.status(400).json({ error: 'Invalid task id.' });
 
-    const [result] = await pool.execute('DELETE FROM tasks WHERE id = ?', [id]);
+    const [result] = await pool.execute('DELETE FROM tasks WHERE id = ? AND user_id = ?', [id, userId]);
     if (result.affectedRows === 0) return res.status(404).json({ error: 'Task not found' });
     res.json({ message: 'Task deleted' });
   } catch (err) {
