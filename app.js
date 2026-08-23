@@ -30,7 +30,15 @@ app.use(express.static('public'))
 const taskRoutes = require('./routes/taskRoutes');
 app.use('/api/tasks', taskRoutes);
 
+
+
 // Auth Routes
+
+// Add before auth
+const meRouter = require('./routes/meRoutes')
+app.use('/api/auth/me', meRouter)
+
+
 const authRoutes = require('./routes/authRoutes');
 app.use('/api/auth', authRoutes);
 
