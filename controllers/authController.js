@@ -96,7 +96,7 @@ const loginUser = async (req, res) => {
     }
 
     req.session.userId = user.user_id
-    res.json({ message: 'Logged in' })
+    res.json({ message: 'Logged in' }) // no .status() = defaults to 200 = success
 
   } catch (err) {
     console.error('Login error:', err.message)
