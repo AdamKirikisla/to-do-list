@@ -53,7 +53,7 @@ let { email, username, password } = req.body
     // adds new user to db
     const [result] = await pool.execute('INSERT INTO Users (username, email, password_hash) VALUES (?, ?, ?)', [username, email, hashed])
 
-    // Express Session
+    // Express Session ID
     req.session.userId = result.insertId
     
 

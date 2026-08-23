@@ -5,6 +5,22 @@ const form = document.querySelector('#add-task-form');
 let tasks = [];
 const taskList = document.querySelector('#task-list');
 
+// Get current user + welcome message
+async function loadUser() {
+  try {
+    const res = await fetch('/api/auth/me');
+    const data = await res.json();
+
+    if (!data.isLoggedIn) {
+      window.location.href = '/log-in.html';
+      return;
+    }
+
+    document.querySelector('#welcome-message').textContent = `Welcome, ${data.username}`;
+  } catch (error) {
+    console.log('Something went wrong:', error);
+  }
+}
 
 // Load tasks
 async function loadTasks() {
@@ -171,5 +187,7 @@ function getVisibleTasks() {
 filtersSection.addEventListener('change', () => {
   renderTasks(getVisibleTasks());
 });
+
+loadUser();
 
 loadTasks();
