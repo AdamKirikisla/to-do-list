@@ -105,7 +105,13 @@ const loginUser = async (req, res) => {
 }
 
 
+const logoutUser = async (req, res) => {
+
+  req.session.destroy(() => {
+    res.json({ message: 'Logged out' })
+  })
+
+}
 
 
-
-module.exports = {registerUser, loginUser};
+module.exports = {registerUser, loginUser, logoutUser};
