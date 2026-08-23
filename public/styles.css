@@ -5,7 +5,8 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 60px 20px;
+  padding: 0;
+  margin: 0;
 }
 
 header {
@@ -19,6 +20,7 @@ h1 {
   font-size: 3rem;
   letter-spacing: 2px;
   margin: 0;
+  margin-top: 25px;
 }
 
 .stats {
@@ -30,12 +32,39 @@ main {
   width: 100%;
   max-width: 900px;
 }
+
+/* NavBar */
 #welcome-message {
-  color: #2ecc87;
-  font-size: 1.2rem;
-  font-weight: 600;
-  text-align: center;
-  margin: 0 0 25px;
+    color: #2ecc87;
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 0;
+}
+.navbar {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 22px 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #24272a;
+    background: #0d0f10;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+.nav-links a {
+    color: #e5e5e5;
+    text-decoration: none;
+    font-size: 0.95rem;
+}
+
+.nav-links a:hover {
+    color: #2ecc87;
 }
 /* Add task form */
 #add-task-form {
