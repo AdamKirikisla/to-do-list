@@ -7,7 +7,10 @@ const MySQLStore = require('express-mysql-session')(session);
 const pool = require('./db');
 dotenv.config();
 
-app.use(cors());
+app.use(cors({
+  origin: process.env.NODE_ENV === 'production' ? 'https://to-do-list-o4u6.onrender.com' : 'http://localhost:5000',
+  credentials: true
+}));
 app.use(express.json());
 app.use(express.urlencoded({ extended : false }));
 
@@ -21,8 +24,9 @@ app.use(session({
   saveUninitialized: false, // don't create/store a session until something is actually saved to it
   cookie: {
     httpOnly: true, // blocks JS from reading the cookie (protects against XSS stealing it)
-    secure: false, // only send cookie over HTTPS — set to true once deployed on Render
-    sameSite: 'lax' // blocks the cookie from being sent on cross-site requests (protects against CSRF)
+    secure: process.env.NODE_ENV === 'production', // only send cookie over HTTPS —  locally always false, render true
+    sameSite: 'lax', // blocks the cookie from being sent on cross-site requests (protects against CSRF)
+    maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
   }
 }))
 
