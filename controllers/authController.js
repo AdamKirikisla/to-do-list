@@ -39,6 +39,7 @@ let { email, username, password } = req.body
     // Add user to db
   try {
 
+    // Check if user already exists
     const [rows] = await pool.execute('SELECT user_id FROM Users WHERE email = ? OR username = ?', [email, username])
 
     if (rows.length > 0) {
@@ -49,7 +50,12 @@ let { email, username, password } = req.body
     // Hashing Logic
     const hashed = await bcrypt.hash(password, 10)
 
-    const result = await pool.execute('INSERT INTO Users (username, email, password_hash) VALUES (?, ?, ?)', [username, email, hashed])
+    // adds new user to db
+    const [result] = await pool.execute('INSERT INTO Users (username, email, password_hash) VALUES (?, ?, ?)', [username, email, hashed])
+
+    // Express Session
+    req.session.userId = result.insertId
+    
 
     res.status(201).json({ message: 'User registered'})}
 
