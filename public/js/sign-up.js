@@ -21,7 +21,7 @@ signupForm.addEventListener('submit', async (e) => {
     const data = await res.json()
 
     if (res.ok) {
-      window.location.href = "log-in.html";
+      window.location.href = "task.html";
     } else {
       errorEl.textContent = data.error || 'Signup failed'
     }
